@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sales Dashboard</title>
+    <link rel="stylesheet" href="https://cdn.bokeh.org/bokeh/release/bokeh-2.3.3.min.css" type="text/css" />
+    <link rel="stylesheet" href="https://cdn.bokeh.org/bokeh/release/bokeh-widgets-2.3.3.min.css" type="text/css" />
+    <link rel="stylesheet" href="https://cdn.bokeh.org/bokeh/release/bokeh-tables-2.3.3.min.css" type="text/css" />
+    <script type="text/javascript" src="https://cdn.bokeh.org/bokeh/release/bokeh-2.3.3.min.js"></script>
+    <script type="text/javascript" src="https://cdn.bokeh.org/bokeh/release/bokeh-widgets-2.3.3.min.js"></script>
+    <script type="text/javascript" src="https://cdn.bokeh.org/bokeh/release/bokeh-tables-2.3.3.min.js"></script>
+    <style>
+        .bk-root .bk-tooltip {
+            background-color: rgba(50, 50, 50, 0.7);
+            color: white;
+            border: none;
+            border-radius: 3px;
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <h1 class="text-center">Sales Dashboard</h1>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="bk-root">
+                    <div class="bk-plotdiv" id="bokeh_sales_by_time"></div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="bk-root">
+                    <div class="bk-plotdiv" id="sku_sales_vol"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        fetch('bokeh_sales_by_time.html')
+            .then(response => response.text())
+            .then(html => {
+                const el = document.querySelector('#bokeh_sales_by_time');
+                el.innerHTML = html;
+            });
+
+        fetch('sku_sales_vol.html')
+            .then(response => response.text())
+            .then(html => {
+                const el = document.querySelector('#sku_sales_vol');
+                el.innerHTML = html;
+            });
+    </script>
+</body>
+</html>
