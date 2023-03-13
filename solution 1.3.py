@@ -1,23 +1,15 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[1]:
-
-
 import pandas as pd
 import os
 import math
 from bokeh.plotting import figure, output_file, show
 from bokeh.io import output_notebook, curdoc
-from bokeh.models import ColumnDataSource, RangeTool, Range1d, RadioButtonGroup, CDSView, GroupFilter, Select, CustomJS, Div, Dropdown
-from bokeh.layouts import row, column, gridplot
-from bokeh.models.widgets import RadioButtonGroup
+from bokeh.models import ColumnDataSource, RangeTool, Range1d, CDSView, GroupFilter, Select, CustomJS, Div, HoverTool
 
 # create empty dataframe 
 df_all = pd.DataFrame()
 
 # set directory path
-directory = r"C:\Users\Toly\Desktop\assignment1 data"
+directory = r"C:\Studiejaar 3\Semester 2\Data science\assignment1 data\assignment1 data"
 
 # loop over each CSV file in the directory, read and extract the chosen columns, and append the data to df_all
 for filename in os.listdir(directory):
@@ -30,7 +22,6 @@ for filename in os.listdir(directory):
 # sort the data by the Date column
 df_all = df_all.sort_values(by= "Date")
 df_all['Date'] = pd.to_datetime(df_all['Date'])
-#print(df_all.columns)
 
 # add zero to NaN
 df_all.fillna(0, inplace=True)
@@ -44,11 +35,11 @@ df_all.drop_duplicates(inplace=True)
 df_all = df_all.reset_index(drop=True)
 
 # save the combined data to a new CSV file
-df_all.to_csv(r"C:\Users\Toly\Desktop\test.csv", index=False)
+df_all.to_csv(r"C:\Studiejaar 3\Semester 2\Data science\assignment1 data\assignment1 data\test.csv", index=False)
 
 
 # Load data
-daily = pd.read_csv(r"C:\Users\Toly\Desktop\test.csv", parse_dates=['Date'])
+daily = pd.read_csv(r"C:\Studiejaar 3\Semester 2\Data science\assignment1 data\assignment1 data\test.csv", parse_dates=['Date'])
 daily.columns = daily.columns.str.strip()
 dates = pd.to_datetime(daily['Date'])
 
@@ -62,48 +53,19 @@ p = figure(x_axis_type='datetime', height=300, width=600,
 crashes_step = p.step('Date', 'Daily Crashes', color='#007A33', legend_label='Crashes', source=source, line_alpha=0.7)
 ratings_step = p.step('Date', 'Daily Average Rating', color='#CE1141', legend_label='Ratings', source=source, line_alpha=0.7)
 
-# Create the menu for the dropdown
-menu = [("A", "Option 1"), ("B", "option 2"), ("C", "option 3")]
-
-# Create a div to display the selected option
-div = Div()
-
-dropdown = Dropdown(label="Select an option", menu=menu, button_type="warning")
-# Define a JavaScript callback to update the div with the selected option
-callback = CustomJS(args=dict(div=div, dropdown=dropdown), code="""
-    var selected_option = dropdown.item;
-    var option_variable = 42;
-    dropdown.button_label = selected_option;
-    if (selected_option == "A") {
-        div.text = option_variable;
-    }
-""")
-
-# Create the dropdown menu with the callback
-
-dropdown.js_on_event("menu_item_click", CustomJS(
-    code="console.log('dropdown: ' + this.item, this.toString())"))
-#ropdown.js_on_change('value', callback)
-# Create a layout with the Select widget and the plot
-layout = column(p, dropdown, div)
-
-p.legend.title = 'Legend Title'
+p.legend.title = ''
 p.legend.label_text_font_size = '12pt'
 p.legend.location = 'top_left'
+
+hover = HoverTool(tooltips=[
+    ('Date', '@Date{%Y-%m-%d}'),
+    ('Daily Crashes', '@{Daily Crashes}'),
+    ('Daily Average Rating', '@{Daily Average Rating}')
+], formatters={'@Date': 'datetime'})
+
+p.add_tools(hover)
+
 # Show the plot
 output_file("gridplot.html")
 output_notebook()
-show(layout)
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
+show(p)

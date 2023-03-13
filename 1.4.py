@@ -8,7 +8,13 @@ import geopandas as gpd
 import os
 import pandas as pd
 import json
-shapefile = r'C:\Users\Toly\Desktop\ne_110m_admin_0_countries.shp'
+import fiona
+import os
+
+
+
+
+shapefile = r'ne_110m_admin_0_countries.shp'
 #Read shapefile using Geopandas
 gdf = gpd.read_file(shapefile)[['ADMIN', 'ADM0_A3', 'geometry']]
 #Rename columns.
@@ -30,7 +36,7 @@ gdf.plot()
 df_all = pd.DataFrame()
 df_all2 = pd.DataFrame() 
 # set directory path
-directory = r"C:\Users\Toly\Desktop\assignment1 data"
+directory = r"C:\Studiejaar 3\Semester 2\Data science\assignment1 data"
 
 # loop over each CSV file in the directory, read and extract the chosen columns, and append the data to df_all
 for filename in os.listdir(directory):
@@ -63,7 +69,7 @@ merged_df.drop(['Transaction Date'], axis=1, inplace=True)
 merged_df = merged_df.drop_duplicates()
 merged_df['Date'] = merged_df['Date'].dt.strftime('%Y-%m-%d')
 merged_df = merged_df.loc[merged_df['Daily Average Rating'] != 0]
-merged_df.to_csv(r"C:\Users\Toly\Desktop\test2.csv", index=False)
+merged_df.to_csv(r"C:\Studiejaar 3\Semester 2\Data science\assignment1 data\test2.csv", index=False)
 
 # merge dataframes gdf and merged_df
 merged = gdf.merge(merged_df, left_on = 'country_code', right_on = 'Buyer Country')

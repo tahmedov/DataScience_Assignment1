@@ -1,57 +1,81 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Sales Dashboard</title>
-    <link rel="stylesheet" href="https://cdn.bokeh.org/bokeh/release/bokeh-2.3.3.min.css" type="text/css" />
-    <link rel="stylesheet" href="https://cdn.bokeh.org/bokeh/release/bokeh-widgets-2.3.3.min.css" type="text/css" />
-    <link rel="stylesheet" href="https://cdn.bokeh.org/bokeh/release/bokeh-tables-2.3.3.min.css" type="text/css" />
-    <script type="text/javascript" src="https://cdn.bokeh.org/bokeh/release/bokeh-2.3.3.min.js"></script>
-    <script type="text/javascript" src="https://cdn.bokeh.org/bokeh/release/bokeh-widgets-2.3.3.min.js"></script>
-    <script type="text/javascript" src="https://cdn.bokeh.org/bokeh/release/bokeh-tables-2.3.3.min.js"></script>
+<html>
+  <head>
+    <title>Dungeons and Dragons Sales Manager</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
-        .bk-root .bk-tooltip {
-            background-color: rgba(50, 50, 50, 0.7);
-            color: white;
-            border: none;
-            border-radius: 3px;
-            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-            font-size: 14px;
-        }
+      body {
+        background-color: white;
+        color: cyan;
+      }
+      .dashboard-header {
+        background-color: cyan;
+        color: white;
+        padding: 10px;
+      }
+      .dashboard-summary {
+        display: flex;
+        justify-content: space-between;
+        padding: 30px;
+      }
+      .summary-item {
+        text-align: center;
+        padding: 20px;
+        background-color: cyan;
+        color: white;
+        font-size: 24px;
+        border-radius: 10px;
+      }
+      .menu-item {
+        margin: 10px;
+        padding: 10px;
+        background-color: cyan;
+        color: white;
+        font-size: 20px;
+        border-radius: 10px;
+      }
+      a {
+        color: white;
+        text-decoration: none;
+      }
     </style>
-</head>
-<body>
-    <div class="container-fluid">
-        <h1 class="text-center">Sales Dashboard</h1>
-        <div class="row">
-            <div class="col-md-12">
-                <div class="bk-root">
-                    <div class="bk-plotdiv" id="bokeh_sales_by_time"></div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <div class="bk-root">
-                    <div class="bk-plotdiv" id="sku_sales_vol"></div>
-                </div>
-            </div>
-        </div>
+  </head>
+  <body>
+    <div class="dashboard-header">
+      <h1>Dungeons and Dragons Sales Manager</h1>
     </div>
-    <script>
-        fetch('bokeh_sales_by_time.html')
-            .then(response => response.text())
-            .then(html => {
-                const el = document.querySelector('#bokeh_sales_by_time');
-                el.innerHTML = html;
-            });
-
-        fetch('sku_sales_vol.html')
-            .then(response => response.text())
-            .then(html => {
-                const el = document.querySelector('#sku_sales_vol');
-                el.innerHTML = html;
-            });
-    </script>
-</body>
+    <div class="dashboard-menu">
+        <a class="menu-item" href="sku_sales_vol.html">Sales by SKU</a>
+        <a class="menu-item" href="bokeh_sales_by_time.html">Daily Average Sales Volume</a>
+        
+    </div>
+    <div class="dashboard-summary">
+      <div class="summary-item">
+        <h2>Daily Average Sales Volume</h2>
+        <p>25.43</p>
+      </div>
+      <div class="summary-item">
+        <h2>Monthly Average Sales Volume</h2>
+        <p>778.19</p>
+      </div>
+      <div class="summary-item">
+        <h2>Daily Average Sales Volume (premium)</h2>
+        <p>8.35</p>
+      </div>
+      <div class="summary-item">
+        <h2>Monthly Average Sales Volume (premium)</h2>
+        <p>245.54</p>
+      </div>
+      <div class="summary-item">
+        <h2>Daily Average Sales Volume (unlockcharactermanager)</h2>
+        <p>17.87</p>
+      </div>
+      <div class="summary-item">
+        <h2>Monthly Average Sales Volume (unlockcharactermanager)</h2>
+        <p>532.65</p>
+      </div>
+    </div>
+    
+  </body>
 </html>
